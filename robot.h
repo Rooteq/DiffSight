@@ -10,7 +10,7 @@
 class Robot
 {
 public:
-    Robot(QGraphicsScene& scene);
+    Robot(QGraphicsScene* scene);
     double& getAngle() {return angle;}
     double& getX() {return x;}
     double& getY() {return x;}

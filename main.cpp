@@ -1,6 +1,7 @@
-#include "mainwindow.h"
+//#include "mainwindow.h"
 
 #include <QApplication>
+#include <QMainWindow>
 
 #include <QKeyEvent>
 
@@ -14,12 +15,17 @@ constexpr int dt = 25;
 
 class GraphicsView : public QGraphicsView {
 public:
-    GraphicsView(Robot* robot = nullptr, QWidget *parent = nullptr) : robot(robot), QGraphicsView(parent)
+    GraphicsView(QWidget *parent = nullptr) : QGraphicsView(parent)
     {
         timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &GraphicsView::updateOnLoop);
-        singleItem = robot->getRobotEntity();
         timer->start(dt);
+
+        scene = new QGraphicsScene(this);
+        robot = new Robot(scene); // pass the pointer lolz
+        singleItem = robot->getRobotEntity();
+        setScene(scene);
+        setSceneRect(-200, -200, 400, 400);
     }
 
 protected:
@@ -53,36 +59,28 @@ protected:
         singleItem->setPos(robot->getPos());
     }
 private:
+    QGraphicsScene* scene;
     QTimer* timer;
-    QGraphicsItemGroup *singleItem;
+    QGraphicsItemGroup *singleItem; // this is to draw robot, change it xdd
     Robot* robot;
 };
 
+class MainWindow : public QMainWindow {
+public:
+    MainWindow(QWidget* parent = nullptr) : QMainWindow(parent)
+    {
+        graphicsView = new GraphicsView(this);
+        setCentralWidget(graphicsView);
+    }
+private:
+    GraphicsView* graphicsView;
+};
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    MainWindow window;
+    window.show();
 
-    QGraphicsScene scene(0,0,340,280);
-
-    Robot* robot= new Robot(scene);
-
-    GraphicsView view(robot);
-
-    view.setScene(&scene);
-    view.setSceneRect(-200, -200, 400, 400);
-
-    view.show();
-
-    // QVector3D vec(1,2,3);
-    // QGenericMatrix<3,3,int> A;
-    // QGenericMatrix<1,3,int> B;
-    // A.fill(1);
-    // B(0,0) = 1;
-    // B(1,0) = 2;
-    // B(2,0) = 3;
-
-    //MainWindow w;
-    // w.show();
     return a.exec();
 }
