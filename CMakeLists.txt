@@ -14,20 +14,25 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        tcpserver.cpp
-        tcpserver.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tcpserver.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
 )
+
+set(PROJECT_INCLUDES
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/mainwindow.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/tcpserver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/robot.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/mainwindow.ui
+)
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(RobotControl
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        robotdrawing.h robotdrawing.cpp
-        robot.h robot.cpp
+        ${PROJECT_INCLUDES}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET RobotControl APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -37,17 +42,20 @@ else()
     if(ANDROID)
         add_library(RobotControl SHARED
             ${PROJECT_SOURCES}
+            ${PROJECT_INCLUDES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(RobotControl
+            ${PROJECT_INCLUDES}
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
 target_link_libraries(RobotControl PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt6::WebSockets Qt${QT_VERSION_MAJOR}::Widgets)
+target_include_directories(RobotControl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
