@@ -6,11 +6,13 @@
 #include <QKeyEvent>
 
 #include "robot.h"
+#include "tcpserver.h"
 
+#include <QPushButton>
 #include <QVector3D>
 #include <QMatrix3x3>
 #include <QTimer>
-
+#include <QtWidgets>
 constexpr int dt = 25;
 
 class GraphicsView : public QGraphicsView {
@@ -69,11 +71,45 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget* parent = nullptr) : QMainWindow(parent)
     {
+        server = new DataServer;
+
         graphicsView = new GraphicsView(this);
         setCentralWidget(graphicsView);
+
+
+        // here make a funtion to create window maybe? As per Kretchmehr's instructions
+        QPushButton* button = new QPushButton("elo", this);
+
+        connect(button, &QPushButton::pressed, this, &MainWindow::onClick);
+        connect(button, &QPushButton::released, this, &MainWindow::onRelease);
+
+        QHBoxLayout* layout = new QHBoxLayout;
+        layout->addWidget(graphicsView);
+        layout->addWidget(button);
+
+        QWidget* centralWidget = new QWidget(this);
+        centralWidget->setLayout(layout);
+
+        setCentralWidget(centralWidget);
+
     }
+
+private slots:
+    void onClick()
+    {
+        server->sendMessage(QString("MP"));
+        qDebug() << "Button clicked";
+    }
+
+    void onRelease()
+    {
+        server->sendMessage(QString("S"));
+        qDebug() << "Button released";
+    }
+
 private:
     GraphicsView* graphicsView;
+    DataServer* server;
 };
 
 int main(int argc, char *argv[])

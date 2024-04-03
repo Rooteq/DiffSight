@@ -41,7 +41,7 @@ public slots:
 
         pos = QPointF(x,y);
 
-        qDebug() << dx << ", " << dy;
+        //qDebug() << dx << ", " << dy;
 
         robotEntity->setRotation(angle);
     }
