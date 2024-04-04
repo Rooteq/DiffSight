@@ -18,12 +18,15 @@ set(PROJECT_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/mainwindow.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tcpserver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/robotdrawing.cpp
 )
 
 set(PROJECT_INCLUDES
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/mainwindow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/tcpserver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/robot.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/graphicsview.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/robotdrawing.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/mainwindow.ui
 )
 
