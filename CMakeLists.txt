@@ -19,6 +19,7 @@ set(PROJECT_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tcpserver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/robotdrawing.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/controlKeys.cpp
 )
 
 set(PROJECT_INCLUDES
@@ -27,6 +28,8 @@ set(PROJECT_INCLUDES
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/robot.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/graphicsview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/robotdrawing.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/controlKeys.h
+
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/mainwindow.ui
 )
 
@@ -57,7 +60,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(RobotControl PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt6::WebSockets Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(RobotControl PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::Widgets)
 target_include_directories(RobotControl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
