@@ -22,7 +22,15 @@ public:
         robot = new Robot(scene); // pass the pointer lolz
         singleItem = robot->getRobotEntity();
         setScene(scene);
-        setSceneRect(-200, -200, 400, 400);
+
+        qreal sceneWidth = 1000; // width of scene in millimeters
+        qreal sceneHeight = 1000; // height of scene in millimeters
+        qreal sceneCenterX = sceneWidth / 2.0;
+        qreal sceneCenterY = sceneHeight / 2.0;
+        qreal sceneMargin = 50; // extra margin to add around the scene
+
+        setSceneRect(-sceneCenterX - sceneMargin, -sceneCenterY - sceneMargin, sceneWidth + 2 * sceneMargin, sceneHeight + 2 * sceneMargin);
+
     }
 
 protected:

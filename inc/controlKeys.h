@@ -59,26 +59,11 @@ public:
      setLayout(layout);
  }
 public slots:
-    void forwardClicked()
-    {
-        emit goForward();
-    }
-    void backwardClicked()
-    {
-        emit goBackward();
-    }
-    void leftClicked()
-    {
-        emit goLeft();
-    }
-    void rightClicked()
-    {
-        emit goRight();
-    }
-    void unclicked()
-    {
-        emit stop();
-    }
+    void forwardClicked() { emit goForward(); }
+    void backwardClicked() { emit goBackward(); }
+    void leftClicked() { emit goLeft(); }
+    void rightClicked() { emit goRight(); }
+    void unclicked() { emit stop(); }
 signals:
     void goForward();
     void goBackward();

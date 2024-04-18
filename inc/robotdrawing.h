@@ -11,18 +11,18 @@ public:
     static QGraphicsItemGroup* getRobotArrow(QGraphicsScene* scene)
     {
         // Draw a circle
-        int radius = 50;
-        QGraphicsEllipseItem *circle = scene->addEllipse(-radius, -radius, 2 * radius, 2 * radius);
+        qreal diameter = 200; // 20 cm diameter converted to mm
+        QGraphicsEllipseItem *circle = scene->addEllipse(-diameter/2, -diameter/2, diameter, diameter);
 
         // Draw an arrow
         QPolygonF arrowPolygon;
-        arrowPolygon << QPointF(30, 0) << QPointF(-10, -10) << QPointF(-10, 10) << QPointF(30, 0);
+        arrowPolygon << QPointF(75, 0) << QPointF(-45, -45) << QPointF(-45, 45) << QPointF(75, 0);
         QGraphicsPolygonItem *arrow = scene->addPolygon(arrowPolygon);
         arrow->setBrush(Qt::black);
 
         QGraphicsItemGroup* robotEntity = scene->createItemGroup({circle, arrow});
 
-        robotEntity->setPos(0,0);
+        robotEntity->setPos(0, 0);
         return robotEntity;
     };
 };

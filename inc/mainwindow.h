@@ -19,6 +19,7 @@ public:
         server = new DataServer;
 
         graphicsView = new GraphicsView(this);
+        graphicsView->scale(0.5,0.5);
 
         keys = new ControlKeys(this);
 
