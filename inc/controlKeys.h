@@ -8,53 +8,72 @@
 class ControlKeys : public QWidget{
  Q_OBJECT
 public:
-    ControlKeys(QWidget *parent = nullptr) : QWidget(parent){
-        upButton = new QPushButton("↑", this);
-        downButton = new QPushButton("↓", this);
-        leftButton = new QPushButton("←", this);
-        rightButton = new QPushButton("→", this);
+ ControlKeys(QWidget *parent = nullptr) : QWidget(parent) {
+     // Create buttons
+     upButton = new QPushButton("↑", this);
+     downButton = new QPushButton("↓", this);
+     leftButton = new QPushButton("←", this);
+     rightButton = new QPushButton("→", this);
 
-        connect(upButton, SIGNAL(pressed()), this, SLOT(forwardClicked()));
-        connect(upButton, SIGNAL(released()), this, SLOT(unclicked()));
-
-        upButton->setFixedSize(50, 50);
-        leftButton->setFixedSize(50, 50);
-        downButton->setFixedSize(50, 50);
-        rightButton->setFixedSize(50, 50);
-
-        QGridLayout* layout = new QGridLayout(this);
-        // Adjusting button size
-        QFont font = upButton->font();
-        font.setPointSize(16); // You can adjust the font size as needed
-        upButton->setFont(font);
-        leftButton->setFont(font);
-        downButton->setFont(font);
-        rightButton->setFont(font);
-
-        // Making buttons square
+     // Connect signals and slots
+     connect(upButton, SIGNAL(pressed()), this, SLOT(forwardClicked()));
+     connect(downButton, SIGNAL(pressed()), this, SLOT(backwardClicked()));
+     connect(leftButton, SIGNAL(pressed()), this, SLOT(leftClicked()));
+     connect(rightButton, SIGNAL(pressed()), this, SLOT(rightClicked()));
 
 
-        // Adding buttons to layout
-        layout->addWidget(upButton, 0, 1, 1, 1, Qt::AlignCenter);
-        layout->addWidget(leftButton, 1, 0);
-        layout->addWidget(downButton, 1, 1, 1, 1, Qt::AlignCenter);
-        layout->addWidget(rightButton, 1, 2);
+     connect(upButton, SIGNAL(released()), this, SLOT(unclicked()));
+     connect(downButton, SIGNAL(released()), this, SLOT(unclicked()));
+     connect(leftButton, SIGNAL(released()), this, SLOT(unclicked()));
+     connect(rightButton, SIGNAL(released()), this, SLOT(unclicked()));
 
+     // Set fixed size for buttons
+     upButton->setFixedSize(50, 50);
+     leftButton->setFixedSize(50, 50);
+     downButton->setFixedSize(50, 50);
+     rightButton->setFixedSize(50, 50);
 
-        // Centering the layout
-        layout->setColumnStretch( 0, 0 ) ; // Give column 0 no stretch ability
-        layout->setRowStretch(0,0);
-        layout->setHorizontalSpacing(5);
-        layout->setVerticalSpacing(5);
+     // Create grid layout
+     QGridLayout* layout = new QGridLayout(this);
+     layout->setSpacing(0);
+     layout->setContentsMargins(0, 0, 0, 0);
 
-        layout->setContentsMargins(0, 0, 0, 0);
+     // Adjust font size
+     QFont font = upButton->font();
+     font.setPointSize(16);
+     upButton->setFont(font);
+     leftButton->setFont(font);
+     downButton->setFont(font);
+     rightButton->setFont(font);
 
-        setLayout(layout);
-    }
+     // Add buttons to layout
+     layout->addWidget(upButton, 0, 1);
+     layout->addWidget(leftButton, 1, 0);
+     layout->addWidget(downButton, 1, 1);
+     layout->addWidget(rightButton, 1, 2);
+
+     // Set the size policy of the widget containing the layout to Fixed
+     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+     // Set layout
+     setLayout(layout);
+ }
 public slots:
     void forwardClicked()
     {
         emit goForward();
+    }
+    void backwardClicked()
+    {
+        emit goBackward();
+    }
+    void leftClicked()
+    {
+        emit goLeft();
+    }
+    void rightClicked()
+    {
+        emit goRight();
     }
     void unclicked()
     {
@@ -62,6 +81,9 @@ public slots:
     }
 signals:
     void goForward();
+    void goBackward();
+    void goLeft();
+    void goRight();
     void stop();
 private:
     QPushButton* upButton;

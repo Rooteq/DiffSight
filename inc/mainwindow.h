@@ -12,24 +12,22 @@
 #include "controlKeys.h"
 
 class MainWindow : public QMainWindow {
+    Q_OBJECT
 public:
     MainWindow(QWidget* parent = nullptr) : QMainWindow(parent)
     {
         server = new DataServer;
 
         graphicsView = new GraphicsView(this);
-        //setCentralWidget(graphicsView);
 
         keys = new ControlKeys(this);
 
-        // here make a funtion to create window maybe? As per Kretchmehr's instructions
-        //QPushButton* button = new QPushButton("elo", this);
+        connect(keys, SIGNAL(goForward()), this, SLOT(onForwardClick()));
+        connect(keys, SIGNAL(goBackward()), this, SLOT(onBackwardClick()));
+        connect(keys, SIGNAL(goLeft()), this, SLOT(onLeftClick()));
+        connect(keys, SIGNAL(goRight()), this, SLOT(onRightClick()));
 
-        connect(keys, SIGNAL(goForward()), this, SLOT(onClick()));
         connect(keys, SIGNAL(stop()), this, SLOT(onRelease()));
-
-        // connect(button, &QPushButton::pressed, this, &MainWindow::onClick);
-        // connect(button, &QPushButton::released, this, &MainWindow::onRelease);
 
         QHBoxLayout* layout = new QHBoxLayout;
         layout->addWidget(graphicsView);
@@ -43,12 +41,26 @@ public:
     }
 
 public slots:
-    void onClick()
+    void onForwardClick()
     {
-        server->sendMessage(QString("MP"));
-        qDebug() << "Button clicked";
+        server->sendMessage(QString("MF"));
+        qDebug() << "F clicked";
     }
-
+    void onBackwardClick()
+    {
+        server->sendMessage(QString("MB"));
+        qDebug() << "B clicked";
+    }
+    void onLeftClick()
+    {
+        server->sendMessage(QString("ML"));
+        qDebug() << "L clicked";
+    }
+    void onRightClick()
+    {
+        server->sendMessage(QString("MR"));
+        qDebug() << "R clicked";
+    }
     void onRelease()
     {
         server->sendMessage(QString("S"));
