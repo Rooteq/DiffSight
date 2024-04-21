@@ -16,6 +16,16 @@ public:
     double& getY() {return x;}
     QPointF getPos() const {return pos;}
     QGraphicsItemGroup* getRobotEntity(){return robotEntity;}
+
+    void setPosition(int16_t x, int16_t y, int16_t ang)
+    {
+        this->x = x;
+        this->y = y;
+        this->angle = qDegreesToRadians(ang);
+
+        pos = QPointF(this->x,this->y);
+        robotEntity->setRotation(this->angle);
+    }
 private:
     QGraphicsItemGroup* robotEntity;
     double angle{0};

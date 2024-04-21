@@ -33,6 +33,12 @@ public:
 
     }
 
+    void updateRobotPosition(int16_t x, int16_t y, int16_t ang)
+    {
+        robot->setPosition(x,y,ang);
+        singleItem->setPos(robot->getPos());
+    }
+
 protected:
     void keyPressEvent(QKeyEvent *event) override {
         qreal v = 0, w = 0;
@@ -63,6 +69,7 @@ protected:
         robot->updatePosition(0,0,100);
         singleItem->setPos(robot->getPos());
     }
+
 private:
     QGraphicsScene* scene;
     QTimer* timer;

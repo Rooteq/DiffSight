@@ -17,9 +17,26 @@ DataServer::DataServer(QObject *parent)
     }
 }
 
+// test message: P1oGüè
 void DataServer::processTextMessage(const QString &message)
 {
-    qDebug()  << message;
+    // switch message[0]? - read different things
+
+    if(message.size() != POS_MSG_SIZE)
+    {
+        qDebug() << "Wrong message size!";
+        return;
+    }
+    QByteArray ba = message.toLatin1();
+    uint8_t *uStr = new uint8_t[message.size()];
+    memcpy(uStr, ba.data(), message.size());
+    this->data.flag = uStr[1];
+    this->data.x = putBackInt16(&uStr[2]);
+    this->data.y = putBackInt16(&uStr[4]);
+    this->data.ang = putBackInt16(&uStr[6]);
+
+    emit positionReady();
+    delete[] uStr;
 }
 
 

@@ -16,10 +16,11 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget* parent = nullptr) : QMainWindow(parent)
     {
+        qDebug() << (char)1;
         server = new DataServer;
 
         graphicsView = new GraphicsView(this);
-        graphicsView->scale(0.5,0.5);
+        graphicsView->scale(0.1,0.1);
 
         keys = new ControlKeys(this);
 
@@ -27,8 +28,9 @@ public:
         connect(keys, SIGNAL(goBackward()), this, SLOT(onBackwardClick()));
         connect(keys, SIGNAL(goLeft()), this, SLOT(onLeftClick()));
         connect(keys, SIGNAL(goRight()), this, SLOT(onRightClick()));
-
         connect(keys, SIGNAL(stop()), this, SLOT(onRelease()));
+
+        connect(server, SIGNAL(positionReady()), this, SLOT(readPosition()));
 
         QHBoxLayout* layout = new QHBoxLayout;
         layout->addWidget(graphicsView);
@@ -38,7 +40,6 @@ public:
         centralWidget->setLayout(layout);
 
         setCentralWidget(centralWidget);
-
     }
 
 public slots:
@@ -66,6 +67,17 @@ public slots:
     {
         server->sendMessage(QString("S"));
         qDebug() << "Button released";
+    }
+
+    void readPosition()
+    {
+        qDebug() << "Reading Position:";
+        qDebug() << "flag: " << server->data.flag;
+        qDebug() << "X: " << server->data.x;
+        qDebug() << "Y: " << server->data.y;
+        qDebug() << "ang: " << server->data.ang;
+
+        graphicsView->updateRobotPosition(server->data.x, server->data.y, server->data.ang);
     }
 
 private:
