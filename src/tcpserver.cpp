@@ -24,6 +24,7 @@ void DataServer::processTextMessage(const QString &message)
 
     if(message.size() != POS_MSG_SIZE)
     {
+        qDebug() << message.size();
         qDebug() << "Wrong message size!";
         return;
     }
@@ -39,11 +40,33 @@ void DataServer::processTextMessage(const QString &message)
     delete[] uStr;
 }
 
+void DataServer::processBinaryMessage(const QByteArray &message)
+{
+    // switch message[0]? - read different things
+
+    if(message.size() != POS_MSG_SIZE)
+    {
+        qDebug() << message.size();
+        qDebug() << "Wrong message size!";
+        return;
+    }
+    QByteArray ba = message;
+    uint8_t *uStr = new uint8_t[message.size()];
+    memcpy(uStr, ba.data(), message.size());
+    this->data.flag = uStr[1];
+    this->data.x = putBackInt16(&uStr[2]);
+    this->data.y = putBackInt16(&uStr[4]);
+    this->data.ang = putBackInt16(&uStr[6]);
+
+    emit positionReady();
+    delete[] uStr;
+}
 
 void DataServer::onNewConnection()
 {
     qDebug() << "onNewConnection invoked!";
     QWebSocket *socket = server->nextPendingConnection();
+    connect(socket, &QWebSocket::binaryMessageReceived, this, &DataServer::processBinaryMessage);
     connect(socket, &QWebSocket::textMessageReceived, this, &DataServer::processTextMessage);
     clients << socket;
 }

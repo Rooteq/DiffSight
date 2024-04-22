@@ -26,6 +26,7 @@ public:
 
 public slots:
     void processTextMessage(const QString &message);
+    void processBinaryMessage(const QByteArray &message);
     void onNewConnection();
     void closed();
     void sendMessage(const QString &str);
