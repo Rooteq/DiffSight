@@ -1,0 +1,48 @@
+digraph "MainWindow"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="MainWindow",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="The MainWindow class represents the main application window."];
+  Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="QMainWindow",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [id="edge2_Node000001_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" graphicsView",fontcolor="grey" ];
+  Node3 [id="Node000003",label="GraphicsView",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_graphics_view.html",tooltip="The GraphicsView class provides a graphical representation of the robot and its environment."];
+  Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="QGraphicsView",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node3 [id="edge4_Node000003_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" robot",fontcolor="grey" ];
+  Node5 [id="Node000005",label="Robot",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_robot.html",tooltip="The Robot class represents the robot and manages its state and position."];
+  Node6 -> Node3 [id="edge5_Node000003_Node000006",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" currentDestinationCross",fontcolor="grey" ];
+  Node6 [id="Node000006",label="CrossItem",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_cross_item.html",tooltip="Custom QGraphicsItem to represent a cross."];
+  Node7 -> Node6 [id="edge6_Node000006_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="QGraphicsItem",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node1 [id="edge7_Node000001_Node000008",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" keys",fontcolor="grey" ];
+  Node8 [id="Node000008",label="ControlKeys",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_control_keys.html",tooltip="A widget containing directional control buttons for a robot."];
+  Node9 -> Node8 [id="edge8_Node000008_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="QWidget",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node10 -> Node1 [id="edge9_Node000001_Node000010",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" server",fontcolor="grey" ];
+  Node10 [id="Node000010",label="DataServer",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_data_server.html",tooltip="The DataServer class sets up a WebSocket server for robot communication."];
+  Node11 -> Node10 [id="edge10_Node000010_Node000011",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="QObject",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node12 -> Node10 [id="edge11_Node000010_Node000012",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" data",fontcolor="grey" ];
+  Node12 [id="Node000012",label="RxData",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$struct_rx_data.html",tooltip="Holds data related to the robot's position and status."];
+  Node13 -> Node1 [id="edge12_Node000001_Node000013",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" stopPush",fontcolor="grey" ];
+  Node13 [id="Node000013",label="StopButton",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_stop_button.html",tooltip=" "];
+  Node9 -> Node13 [id="edge13_Node000013_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node14 -> Node1 [id="edge14_Node000001_Node000014",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" languageSelect",fontcolor="grey" ];
+  Node14 [id="Node000014",label="Languages",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_languages.html",tooltip="A widget that enables user to change current language."];
+  Node15 -> Node14 [id="edge15_Node000014_Node000015",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node15 [id="Node000015",label="QComboBox",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+  Node16 -> Node1 [id="edge16_Node000001_Node000016",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" pointTogo",fontcolor="grey" ];
+  Node16 [id="Node000016",label="setDestination",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classset_destination.html",tooltip="A QWidget subclass for setting a destination point."];
+  Node9 -> Node16 [id="edge17_Node000016_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node17 -> Node1 [id="edge18_Node000001_Node000017",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" ledWidget",fontcolor="grey" ];
+  Node17 [id="Node000017",label="LedWidget",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_led_widget.html",tooltip="A widget that displays the status of various indicators using LED representations."];
+  Node9 -> Node17 [id="edge19_Node000017_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node18 -> Node1 [id="edge20_Node000001_Node000018",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" chart",fontcolor="grey" ];
+  Node18 [id="Node000018",label="VelocityChart",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$class_velocity_chart.html",tooltip="A class to display and update velocity data on a chart."];
+  Node19 -> Node18 [id="edge21_Node000018_Node000019",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node19 [id="Node000019",label="QChartView",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",tooltip=" "];
+}

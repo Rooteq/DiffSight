@@ -1,0 +1,13 @@
+digraph "setDestination::setDestination"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="setDestination::setDestination",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Constructor for setDestination."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="setDestination::readPoint",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classset_destination.html#a96c3fecb47d7709062dcb0b3d4352522",tooltip="Reads the point from the input line edit."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="setDestination::destination\lReady",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classset_destination.html#abe8e59e2426273b27e9af180fc56b9ba",tooltip="Signal emitted when the destination point is ready."];
+}

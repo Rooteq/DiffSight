@@ -3,7 +3,7 @@
 DataServer::DataServer(QObject *parent)
     : QObject{parent}
 {
-    server = new QWebSocketServer(QStringLiteral("DupaServer"), QWebSocketServer::NonSecureMode, this);
+    server = new QWebSocketServer(QStringLiteral("WebServer"), QWebSocketServer::NonSecureMode, this);
 
     if(!server->listen(QHostAddress::Any, 9999))
     {
@@ -16,6 +16,35 @@ DataServer::DataServer(QObject *parent)
         qDebug() << "Server started!";
     }
 }
+
+void DataServer::sendPosition(const int16_t x, const int16_t y)
+{
+    uint8_t msg[DEST_MSG_SIZE];
+    msg[0] = 'D';
+
+    msg[2] = (uint8_t)(x & 0xFF);
+    msg[1] = (uint8_t)((x >> 8) & 0xFF);
+    msg[4] = (uint8_t)(y & 0xFF);
+    msg[3] = (uint8_t)((y >> 8) & 0xFF);
+
+    QByteArray byteMsg;
+    byteMsg.resize(DEST_MSG_SIZE);
+
+    memcpy(byteMsg.data(), msg, DEST_MSG_SIZE);
+
+    for(int i = 0; i < DEST_MSG_SIZE; ++i)
+    {
+        qDebug() << (uint8_t)byteMsg[i];
+    }
+
+    for(auto x : clients)
+    {
+        x->sendBinaryMessage(byteMsg);
+    }
+
+    qDebug() << "message sent";
+}
+
 
 // test message: P1oGüè
 void DataServer::processTextMessage(const QString &message)
@@ -42,8 +71,6 @@ void DataServer::processTextMessage(const QString &message)
 
 void DataServer::processBinaryMessage(const QByteArray &message)
 {
-    // switch message[0]? - read different things
-
     if(message.size() != POS_MSG_SIZE)
     {
         qDebug() << message.size();
@@ -57,6 +84,10 @@ void DataServer::processBinaryMessage(const QByteArray &message)
     this->data.x = putBackInt16(&uStr[2]);
     this->data.y = putBackInt16(&uStr[4]);
     this->data.ang = putBackInt16(&uStr[6]);
+    this->data.obstacleProximity = uStr[8];
+
+    this->data.rpmL = uStr[9];
+    this->data.rpmR = uStr[10];
 
     emit positionReady();
     delete[] uStr;
@@ -71,13 +102,19 @@ void DataServer::onNewConnection()
     clients << socket;
 }
 
+int16_t DataServer::putBackInt16(uint8_t uStr[2])
+{
+    int16_t data = (static_cast<int16_t>(uStr[0]) << 8) | uStr[1];
+    return data;
+}
+
 void DataServer::closed()
 {
-    // lolz
+    // placeholder
 }
 
 void DataServer::sendMessage(const QString &str)
-{    
+{
     for(auto x : clients)
     {
         x->sendTextMessage(str);

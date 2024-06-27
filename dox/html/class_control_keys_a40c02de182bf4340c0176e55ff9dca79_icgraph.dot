@@ -1,0 +1,13 @@
+digraph "ControlKeys::goRight"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="ControlKeys::goRight",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Signal emitted when the right button is pressed."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="ControlKeys::rightClicked",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_control_keys.html#aeffb522c933d93e1beb9735404752f95",tooltip="Slot for handling right button press."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="ControlKeys::ControlKeys",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_control_keys.html#a30a695329fa1e9096607d3460b12e13a",tooltip="Construct a new ControlKeys object."];
+}
